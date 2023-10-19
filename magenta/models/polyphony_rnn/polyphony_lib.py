@@ -145,9 +145,7 @@ class PolyphonicSequence(events_lib.EventSequence):
         break
       if self._events[0].event_type == PolyphonicEvent.STEP_END:
         steps_trimmed += 1
-        tf.logging.info('trimmed step')
       del self._events[0]
-      tf.logging.info('trimmed event')
       
   def set_length(self, steps, from_left=False):
     """Sets the length of the sequence to the specified number of steps.
