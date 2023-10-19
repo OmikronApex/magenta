@@ -174,9 +174,9 @@ class PolyphonyRnnSequenceGenerator(sequence_generator.BaseSequenceGenerator):
           len(poly_seq) + rnn_steps_to_gen, poly_seq, **args)
     poly_seq.set_length(total_steps)
     
-    print('trying to trim steps')
-    print(num_steps_before_generation)
-    poly_seq.trim_steps_from_start(num_steps_before_generation) 
+    if not (generator_options.args[
+        'no_inject_primer_during_generation'].bool_value):
+      poly_seq.trim_steps_from_start(num_steps_before_generation) 
     
     if generator_options.args['condition_on_primer'].bool_value:
       generated_sequence = poly_seq.to_sequence(qpm=qpm)
