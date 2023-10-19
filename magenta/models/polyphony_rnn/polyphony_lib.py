@@ -140,14 +140,15 @@ class PolyphonicSequence(events_lib.EventSequence):
   def trim_steps_from_start(self, num_steps):
     """Trims a given number of steps from the end of the sequence."""
     steps_trimmed = 0
-
     if len(self._events) > num_steps:
-      for i in range(num_steps):
-        for j in range(len(self._events)):
-          self._events[j+1] = self._events[j+2]
-        del self._events[len(self._events) + 1]
+      for i in range(len(self._events)):
+        if steps_trimmed == num_steps:
+          break
+        if self._events[0].event_type == PolyphonicEvent.STEP_END:
+          steps_trimmed += 1
+        self._events.pop(0)
     else:
-        break
+      break
       
   def set_length(self, steps, from_left=False):
     """Sets the length of the sequence to the specified number of steps.
