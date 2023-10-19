@@ -145,7 +145,7 @@ class PolyphonicSequence(events_lib.EventSequence):
         break
       if self._events[0].event_type == PolyphonicEvent.STEP_END:
         steps_trimmed += 1
-      self._events.pop(0)
+      del self._events[0]
       
   def set_length(self, steps, from_left=False):
     """Sets the length of the sequence to the specified number of steps.
