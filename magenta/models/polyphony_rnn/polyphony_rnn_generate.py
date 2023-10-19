@@ -197,7 +197,7 @@ def run_with_flags(generator):
   generator_options = generator_pb2.GeneratorOptions()
   # Set the start time to begin when the last note ends.
   generate_section = generator_options.generate_sections.add(
-      start_time=0,
+      start_time=primer_sequence.total_time,
       end_time=generate_end_time)
 
   if generate_section.start_time >= generate_section.end_time:
