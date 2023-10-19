@@ -160,7 +160,7 @@ class PolyphonyRnnSequenceGenerator(sequence_generator.BaseSequenceGenerator):
 
     total_steps = poly_seq.num_steps + (
         generate_end_step - generate_start_step)
-
+    num_steps_before_generation = poly_seq.num_steps
     while poly_seq.num_steps < total_steps:
       # Assume it takes ~5 rnn steps to generate one quantized step.
       # Can't know for sure until generation is finished because the number of
@@ -174,6 +174,10 @@ class PolyphonyRnnSequenceGenerator(sequence_generator.BaseSequenceGenerator):
           len(poly_seq) + rnn_steps_to_gen, poly_seq, **args)
     poly_seq.set_length(total_steps)
 
+    if not (generator_options.args[
+        'no_inject_primer_during_generation'].bool_value):
+          poly_seq.trim_steps_from_start(poly_seq,num_steps_before_generation) 
+    
     if generator_options.args['condition_on_primer'].bool_value:
       generated_sequence = poly_seq.to_sequence(qpm=qpm)
     else:
