@@ -176,6 +176,8 @@ class PolyphonyRnnSequenceGenerator(sequence_generator.BaseSequenceGenerator):
 
     if not (generator_options.args[
         'no_inject_primer_during_generation'].bool_value):
+          tf.logging.info(
+            'trying to trim %d steps' % (num_steps_before_generation))
           poly_seq.trim_steps_from_start(num_steps_before_generation) 
     
     if generator_options.args['condition_on_primer'].bool_value:
