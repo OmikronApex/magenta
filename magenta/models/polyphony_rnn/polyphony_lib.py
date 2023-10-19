@@ -136,7 +136,19 @@ class PolyphonicSequence(events_lib.EventSequence):
         self._events = [
             PolyphonicEvent(event_type=PolyphonicEvent.START, pitch=None)]
         break
+        
+  def trim_steps_from_start(self, num_steps):
+    """Trims a given number of steps from the end of the sequence."""
+    steps_trimmed = 0
 
+    if len(self._events) > num_steps:
+      for i in range(num_steps):
+        for j in range(len(self._events)):
+          self._events[j+1] = self._events[j+2]
+        del self._events[len(self._events) + 1]
+    else:
+        break
+      
   def set_length(self, steps, from_left=False):
     """Sets the length of the sequence to the specified number of steps.
 
